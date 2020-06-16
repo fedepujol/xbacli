@@ -7,6 +7,10 @@
 """
 import argparse
 
+
+""" Const  """
+INTEL_PATH = '/sys/class/backlight/intel_backlight/'
+
 """ Get the current and max value of brightness """
 def getValue(fileName):
     f_file = open(fileName, 'r')
@@ -17,7 +21,7 @@ def getValue(fileName):
 
 """ Change the value of file """
 def saveValue(newValue):
-    with open('brightness', 'r+') as f_bright:
+    with open(INTEL_PATH + 'brightness', 'r+') as f_bright:
         data = f_bright.seek(0)
         f_bright.write(str(newValue))
         f_bright.truncate()
@@ -25,8 +29,8 @@ def saveValue(newValue):
 
 def change_brightness(v_inc):
     """ Get the current values of Brightness """
-    c_bright = float(getValue('brightness'))
-    m_bright = float(getValue('max_brightness'))
+    c_bright = float(getValue(INTEL_PATH + 'brightness'))
+    m_bright = float(getValue(INTEL_PATH + 'max_brightness'))
 
     """ Calculate the integer part of the percentage """
     c_bright += ((v_inc * m_bright) / 100)
